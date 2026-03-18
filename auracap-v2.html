@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuraCap — Carbon Intelligence for Industry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivory:#FAFAF8;--paper:#F3F2EE;--line:#E5E3DD;--line2:#CFCDC5;
+  --ink:#18170F;--ink2:#3A382F;--ink3:#78756A;--ink4:#B2AFA6;
+  --emerald:#0A6652;--em-pale:#EAF4F0;--em-mid:rgba(10,102,82,0.10);
+  --amber:#8A5C0A;--am-pale:#FDF6E6;
+  --serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ivory);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:900;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(250,250,248,0.88);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--line);}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:500;font-size:0.95rem;letter-spacing:-0.02em;color:var(--ink);}
+.logo-mark{width:30px;height:30px;border-radius:7px;background:var(--emerald);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-mark svg{width:15px;height:15px;}
+nav ul{display:flex;gap:30px;list-style:none;position:absolute;left:50%;transform:translateX(-50%);}
+nav ul a{font-size:0.875rem;color:var(--ink3);font-weight:400;transition:color .2s;}
+nav ul a:hover{color:var(--ink);}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.btn{font-family:var(--sans);font-size:0.85rem;font-weight:400;padding:7px 18px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:all .18s;white-space:nowrap;border:none;}
+.btn-ghost{color:var(--ink3);background:transparent;border:1px solid transparent;}
+.btn-ghost:hover{color:var(--ink);background:var(--paper);border-color:var(--line);}
+.btn-solid{background:var(--emerald);color:#fff;font-weight:500;}
+.btn-solid:hover{background:#085a47;box-shadow:0 4px 18px rgba(10,102,82,0.22);}
+.btn-lg{padding:11px 24px;font-size:0.9rem;}
+.btn-outline{font-family:var(--sans);font-size:0.9rem;font-weight:400;padding:10px 22px;border-radius:7px;border:1px solid var(--line2);color:var(--ink2);background:transparent;cursor:pointer;text-decoration:none;transition:all .18s;display:inline-flex;align-items:center;gap:7px;}
+.btn-outline:hover{border-color:var(--ink3);color:var(--ink);background:var(--paper);}
+
+#hero{min-height:100vh;padding:62px 52px 0;display:flex;align-items:center;position:relative;overflow:hidden;}
+.hero-bg-lines{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 80% at 60% 40%,black 0%,transparent 80%);opacity:.45;}
+.hero-blob{position:absolute;right:-200px;top:50%;transform:translateY(-50%);width:680px;height:680px;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(10,102,82,0.07) 0%,transparent 65%);}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;font-size:0.78rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--emerald);background:var(--em-pale);border:1px solid rgba(10,102,82,0.18);border-radius:100px;padding:5px 13px;margin-bottom:28px;animation:fadeUp .6s ease both;}
+.tag-dot{width:5px;height:5px;background:var(--emerald);border-radius:50%;animation:pulse 2.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.6);}}
+h1{font-family:var(--serif);font-size:clamp(3rem,5.2vw,4.6rem);font-weight:400;line-height:1.06;letter-spacing:-0.02em;color:var(--ink);margin-bottom:22px;animation:fadeUp .6s .08s ease both;}
+h1 em{font-style:italic;color:var(--emerald);}
+.hero-sub{font-size:1.05rem;line-height:1.75;color:var(--ink3);font-weight:300;max-width:480px;margin-bottom:36px;animation:fadeUp .6s .16s ease both;}
+.hero-actions{display:flex;align-items:center;gap:10px;animation:fadeUp .6s .24s ease both;}
+.hero-right{animation:fadeUp .6s .3s ease both;}
+.metrics-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:0 2px 8px rgba(0,0,0,0.04),0 20px 60px rgba(0,0,0,0.06);}
+.metrics-card-label{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);font-weight:500;margin-bottom:24px;}
+.metric-item{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);}
+.metric-item:last-of-type{border-bottom:none;}
+.metric-desc{font-size:0.875rem;color:var(--ink3);line-height:1.4;max-width:200px;}
+.metric-val{font-family:var(--serif);font-size:1.55rem;font-weight:400;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap;margin-left:16px;}
+.metric-val em{font-style:normal;color:var(--emerald);font-family:var(--sans);font-size:0.9rem;}
+.cbam-flag{margin-top:20px;padding:14px 16px;background:var(--am-pale);border:1px solid rgba(138,92,10,0.15);border-radius:10px;display:flex;gap:10px;align-items:flex-start;}
+.flag-text{font-size:0.8rem;color:var(--amber);line-height:1.55;}
+.flag-text strong{font-weight:500;display:block;margin-bottom:2px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+.divider{width:100%;height:1px;background:var(--line);}
+.eyebrow{font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--emerald);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--emerald);}
+.title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,2.9rem);font-weight:400;line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:14px;}
+.title em{font-style:italic;color:var(--emerald);}
+.sub{font-size:0.975rem;line-height:1.75;color:var(--ink3);font-weight:300;max-width:500px;}
+
+#how{background:var(--paper);}
+.how-inner{max-width:1200px;margin:0 auto;padding:96px 52px;}
+.how-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:56px;}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+.step{background:#fff;padding:36px 30px;transition:background .25s;}
+.step:hover{background:var(--ivory);}
+.step-num{font-family:var(--serif);font-size:2.6rem;font-weight:300;color:var(--line2);line-height:1;margin-bottom:22px;letter-spacing:-0.03em;}
+.step h3{font-size:0.975rem;font-weight:500;color:var(--ink);margin-bottom:10px;}
+.step p{font-size:0.875rem;line-height:1.7;color:var(--ink3);font-weight:300;}
+.step-badge{display:inline-block;margin-top:18px;font-size:0.73rem;letter-spacing:0.05em;font-weight:500;text-transform:uppercase;color:var(--emerald);background:var(--em-pale);border:1px solid rgba(10,102,82,0.16);border-radius:4px;padding:3px 9px;}
+
+/* ── SERVICES ACCORDION ── */
+#services .inner{max-width:1200px;margin:0 auto;padding:96px 52px;}
+.services-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:48px;}
+.acc{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;}
+.acc-item{border-bottom:1px solid var(--line);}
+.acc-item:last-child{border-bottom:none;}
+.acc-trigger{
+  width:100%;display:flex;align-items:center;gap:20px;
+  padding:22px 28px;background:transparent;border:none;
+  cursor:pointer;text-align:left;transition:background .18s;
+}
+.acc-trigger:hover{background:var(--ivory);}
+.acc-trigger.open{background:var(--ivory);}
+.acc-num{font-family:var(--serif);font-size:1.1rem;color:var(--ink4);font-weight:300;width:32px;flex-shrink:0;letter-spacing:-0.02em;}
+.acc-icon-wrap{
+  width:36px;height:36px;border-radius:8px;flex-shrink:0;
+  background:var(--em-pale);border:1px solid rgba(10,102,82,0.14);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.acc-trigger.open .acc-icon-wrap{background:var(--emerald);border-color:var(--emerald);}
+.acc-meta{flex:1;display:flex;flex-direction:column;gap:2px;}
+.acc-label{font-size:0.72rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink4);font-weight:500;}
+.acc-title{font-size:0.975rem;font-weight:500;color:var(--ink);letter-spacing:-0.01em;}
+.acc-badges{display:flex;gap:6px;margin-left:auto;flex-shrink:0;align-items:center;}
+.badge-core{font-size:0.67rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:#fff;background:var(--emerald);border-radius:3px;padding:2px 8px;}
+.badge-road{font-size:0.67rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink4);background:var(--paper);border:1px solid var(--line2);border-radius:3px;padding:2px 8px;}
+.acc-arrow{
+  width:24px;height:24px;flex-shrink:0;color:var(--ink4);
+  transition:transform .3s ease;display:flex;align-items:center;justify-content:center;
+}
+.acc-trigger.open .acc-arrow{transform:rotate(180deg);color:var(--emerald);}
+
+.acc-body{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .32s ease;
+}
+.acc-body.open{grid-template-rows:1fr;}
+.acc-body-inner{overflow:hidden;}
+.acc-content{
+  padding:0 28px 28px 80px;
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+}
+.acc-content.wide{grid-template-columns:1fr 280px;}
+.acc-content.single{grid-template-columns:1fr;}
+.acc-desc{font-size:0.9rem;line-height:1.75;color:var(--ink3);font-weight:300;margin-bottom:20px;}
+.acc-sub-list{display:flex;flex-direction:column;gap:8px;}
+.acc-sub-list li{display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:var(--ink2);line-height:1.55;list-style:none;}
+.acc-sub-list li::before{content:'';width:5px;height:5px;background:var(--emerald);border-radius:50%;flex-shrink:0;margin-top:7px;}
+/* sub-features indented */
+.sub-features{margin-top:6px;margin-left:13px;display:flex;flex-direction:column;gap:5px;}
+.sub-features span{font-size:0.8rem;color:var(--ink3);display:flex;align-items:flex-start;gap:6px;}
+.sub-features span::before{content:'→';color:var(--ink4);font-size:0.72rem;flex-shrink:0;margin-top:1px;}
+/* ESG aside */
+.esg-aside{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;}
+.esg-aside-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink4);font-weight:500;margin-bottom:16px;}
+.esg-bars{display:flex;flex-direction:column;gap:11px;margin-bottom:18px;}
+.esg-bar-row{display:flex;align-items:center;gap:10px;}
+.esg-bar-label{font-size:0.78rem;color:var(--ink3);width:96px;flex-shrink:0;}
+.esg-bar-track{flex:1;height:5px;background:#fff;border-radius:100px;overflow:hidden;border:1px solid var(--line);}
+.esg-bar-fill{height:100%;border-radius:100px;}
+.esg-bar-val{font-size:0.78rem;font-weight:500;color:var(--ink2);width:24px;text-align:right;}
+.esg-fw{display:flex;gap:5px;flex-wrap:wrap;}
+.fw-tag{font-size:0.71rem;font-weight:500;color:var(--emerald);background:var(--em-pale);border:1px solid rgba(10,102,82,0.16);border-radius:4px;padding:2px 7px;letter-spacing:0.03em;}
+/* dim */
+.acc-item.dim .acc-title{color:var(--ink3);}
+.acc-item.dim .acc-num{color:var(--line2);}
+@media(max-width:900px){
+  .acc-content,.acc-content.wide{grid-template-columns:1fr;}
+  .acc-content{padding-left:20px;padding-right:20px;}
+  .services-head{grid-template-columns:1fr;gap:20px;}
+}
+
+/* ── DATA & CHARTS ── */
+#data{background:var(--paper);}
+#data .inner{max-width:1200px;margin:0 auto;padding:96px 52px;}
+.data-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:52px;}
+.charts-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;}
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 24px;transition:all .22s;}
+.chart-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.07);transform:translateY(-2px);}
+.chart-8{grid-column:span 8;}
+.chart-4{grid-column:span 4;}
+.chart-12{grid-column:span 12;}
+.chart-label{font-size:0.72rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink4);font-weight:500;margin-bottom:6px;}
+.chart-title{font-size:0.95rem;font-weight:500;color:var(--ink);margin-bottom:4px;letter-spacing:-0.01em;}
+.chart-src{font-size:0.72rem;color:var(--ink4);margin-bottom:20px;}
+.chart-src a{color:var(--emerald);text-decoration:none;}
+/* Bar chart */
+.bar-chart{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:12px;}
+.bar-row-label{font-size:0.78rem;color:var(--ink3);width:110px;flex-shrink:0;line-height:1.3;}
+.bar-track{flex:1;height:8px;background:var(--paper);border-radius:100px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:100px;transition:width 1s ease;}
+.bar-val{font-size:0.78rem;font-weight:500;color:var(--ink2);width:52px;text-align:right;flex-shrink:0;}
+/* Line chart SVG */
+.svg-chart{width:100%;overflow:visible;}
+/* Stat blocks */
+.stat-blocks{display:grid;grid-template-columns:1fr;gap:10px;}
+.stat-block{padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-radius:10px;}
+.stat-block-val{font-family:var(--serif);font-size:1.6rem;color:var(--ink);letter-spacing:-0.02em;line-height:1;}
+.stat-block-val em{font-style:normal;color:var(--emerald);font-family:var(--sans);font-size:0.8rem;margin-left:4px;}
+.stat-block-desc{font-size:0.78rem;color:var(--ink3);margin-top:4px;line-height:1.4;}
+/* Donut */
+.donut-wrap{display:flex;align-items:center;gap:24px;}
+.donut-legend{display:flex;flex-direction:column;gap:8px;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--ink3);}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.legend-val{font-weight:500;color:var(--ink);margin-left:auto;padding-left:8px;}
+
+/* ── NEWS ── */
+#news .inner{max-width:1200px;margin:0 auto;padding:96px 52px;}
+.news-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:52px;}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.news-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:all .22s;text-decoration:none;color:inherit;display:flex;flex-direction:column;}
+.news-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.08);transform:translateY(-2px);border-color:rgba(10,102,82,0.2);}
+.news-tag-bar{padding:10px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.news-tag{font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;}
+.tag-cbam{background:#FEF3C7;color:#92600A;}
+.tag-auracap{background:var(--em-pale);color:var(--emerald);}
+.tag-market{background:#EDE9FE;color:#5B21A8;}
+.tag-policy{background:#FEE2E2;color:#BE123C;}
+.news-date{font-size:0.72rem;color:var(--ink4);}
+.news-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+.news-title{font-size:0.92rem;font-weight:500;color:var(--ink);line-height:1.45;margin-bottom:10px;letter-spacing:-0.01em;}
+.news-excerpt{font-size:0.82rem;color:var(--ink3);line-height:1.65;font-weight:300;flex:1;}
+.news-footer{padding:14px 20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.news-source{font-size:0.74rem;color:var(--ink4);}
+.news-arrow{font-size:0.8rem;color:var(--emerald);}
+.news-featured{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid rgba(10,102,82,0.2);background:linear-gradient(135deg,var(--em-pale) 0%,#fff 60%);}
+.news-featured-left{padding:32px;}
+.news-featured-right{padding:32px;border-left:1px solid var(--line);}
+.news-featured .news-title{font-family:var(--serif);font-size:1.2rem;line-height:1.3;}
+@media(max-width:900px){
+  .charts-grid .chart-8,.charts-grid .chart-4,.charts-grid .chart-6{grid-column:span 12;}
+  .news-grid{grid-template-columns:1fr;}
+  .news-featured{grid-column:span 1;grid-template-columns:1fr;}
+  .news-featured-right{border-left:none;border-top:1px solid var(--line);}
+  .data-head,.news-head{grid-template-columns:1fr;gap:20px;}
+}
+#partners{background:var(--paper);}
+.partners-inner{max-width:1200px;margin:0 auto;padding:88px 52px;}
+.partners-head{margin-bottom:52px;}
+.partners-head p{font-size:0.9rem;color:var(--ink3);max-width:480px;line-height:1.7;margin-top:8px;}
+.partners-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.pcard{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:28px 24px 24px;
+  display:flex;flex-direction:column;gap:0;
+  transition:all .22s;position:relative;overflow:hidden;
+}
+.pcard::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--em-mid) 0%,transparent 55%);
+  opacity:0;transition:opacity .35s;
+}
+.pcard:hover{border-color:rgba(10,102,82,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.07);transform:translateY(-2px);}
+.pcard:hover::before{opacity:1;}
+.pcard-logo{
+  width:56px;height:56px;border-radius:12px;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;flex-shrink:0;
+}
+.pcard-logo svg{width:100%;height:100%;}
+.pcard-name{font-size:0.9rem;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:5px;position:relative;z-index:1;}
+.pcard-type{font-size:0.76rem;color:var(--ink4);position:relative;z-index:1;}
+.pcard-join{
+  border:1.5px dashed var(--line2);
+  background:transparent;
+}
+.pcard-join:hover{border-color:rgba(10,102,82,0.3);background:var(--em-pale);}
+.pcard-join .pcard-name{color:var(--ink3);}
+.pcard-join .pcard-logo{background:var(--paper);border:1px dashed var(--line2);}
+@media(max-width:900px){.partners-grid{grid-column:1fr 1fr;}.pcard-join{grid-column:span 2 !important;}}
+
+#about .inner{max-width:1200px;margin:0 auto;padding:96px 52px;}
+.about-grid{display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:start;}
+.about-body{font-size:1rem;line-height:1.82;color:var(--ink3);font-weight:300;}
+.about-body strong{color:var(--ink);font-weight:500;}
+.about-body p+p{margin-top:18px;}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px;}
+.pillar{padding:18px 16px;background:var(--paper);border:1px solid var(--line);border-radius:10px;}
+.pillar-icon{font-size:1.1rem;margin-bottom:8px;}
+.pillar h4{font-size:0.82rem;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.pillar p{font-size:0.78rem;color:var(--ink3);line-height:1.55;}
+.about-panel{position:sticky;top:80px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04),0 16px 48px rgba(0,0,0,0.06);}
+.panel-header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.panel-title{font-size:0.78rem;font-weight:500;color:var(--ink2);}
+.panel-live{display:flex;align-items:center;gap:5px;font-size:0.73rem;color:var(--emerald);letter-spacing:0.04em;}
+.panel-live::before{content:'';width:5px;height:5px;background:var(--emerald);border-radius:50%;animation:pulse 2s infinite;}
+.panel-rows{padding:8px 0;}
+.panel-row{display:flex;align-items:center;justify-content:space-between;padding:11px 24px;border-bottom:1px solid var(--line);transition:background .15s;}
+.panel-row:last-child{border-bottom:none;}
+.panel-row:hover{background:var(--ivory);}
+.pr-label{font-size:0.82rem;color:var(--ink3);}
+.pr-val{font-family:var(--serif);font-size:1.25rem;color:var(--ink);letter-spacing:-0.02em;}
+.pr-val small{font-family:var(--sans);font-size:0.72rem;color:var(--emerald);margin-left:4px;}
+.panel-alert{margin:16px;padding:14px;background:var(--am-pale);border:1px solid rgba(138,92,10,0.14);border-radius:9px;}
+.pa-head{font-size:0.72rem;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--amber);margin-bottom:5px;}
+.pa-body{font-size:0.8rem;color:var(--amber);line-height:1.6;opacity:.85;}
+
+#cta{background:var(--ink);overflow:hidden;}
+.cta-inner{max-width:1200px;margin:0 auto;padding:96px 52px;position:relative;}
+.cta-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(10,102,82,0.22) 0%,transparent 70%);pointer-events:none;}
+.cta-content{position:relative;z-index:2;text-align:center;}
+.cta-content .eyebrow{justify-content:center;color:rgba(10,102,82,0.85);}
+.cta-content .eyebrow::before{background:rgba(10,102,82,0.5);}
+.cta-content .title{color:#fff;margin-bottom:16px;}
+.cta-content .sub{color:rgba(255,255,255,0.42);max-width:460px;margin:0 auto 40px;}
+.cta-form{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:7px 7px 7px 22px;backdrop-filter:blur(8px);}
+.cta-form input{background:transparent;border:none;outline:none;font-family:var(--sans);font-size:0.9rem;color:#fff;width:230px;}
+.cta-form input::placeholder{color:rgba(255,255,255,0.28);}
+.cta-note{margin-top:14px;font-size:0.78rem;color:rgba(255,255,255,0.28);}
+
+footer{border-top:1px solid var(--line);padding:40px 52px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.footer-left{display:flex;align-items:center;gap:28px;}
+.footer-copy{font-size:0.8rem;color:var(--ink4);}
+footer ul{display:flex;gap:22px;list-style:none;}
+footer ul a{font-size:0.8rem;color:var(--ink4);transition:color .2s;}
+footer ul a:hover{color:var(--ink3);}
+.footer-tag{font-size:0.78rem;color:var(--ink4);display:flex;align-items:center;gap:6px;}
+.ft-dot{width:5px;height:5px;background:var(--emerald);border-radius:50%;animation:pulse 3s infinite;}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}nav ul{display:none;}
+  #hero{padding:62px 20px 0;}
+  .hero-content{grid-template-columns:1fr;gap:40px;}
+  .how-inner,.partners-inner,#services .inner,#about .inner,.cta-inner,footer{padding-left:20px;padding-right:20px;}
+  .how-head,.services-head,.about-grid{grid-template-columns:1fr;gap:28px;}
+  .steps{grid-template-columns:1fr;}
+  .svc-6,.svc-4{grid-column:span 12;}
+  .footer-inner{flex-direction:column;gap:20px;text-align:center;}
+  .footer-left{flex-direction:column;gap:12px;}
+  .cta-form{flex-direction:column;width:100%;}
+  .cta-form input{width:100%;}
+  .about-panel{position:static;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C10 2 4 6 4 11C4 14.3 6.7 17 10 17C13.3 17 16 14.3 16 11C16 6 10 2 10 2Z" fill="white" opacity="0.9"/><path d="M10 8C10 8 7 10.5 7 12.5C7 14 8.3 15 10 15C11.7 15 13 14 13 12.5C13 10.5 10 8 10 8Z" fill="white" opacity="0.4"/></svg>
+    </div>
+    AuraCap
+  </a>
+  <ul>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#partners">Partners</a></li>
+    <li><a href="#data">Data</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#cta" class="btn btn-ghost">Sign in</a>
+    <a href="#cta" class="btn btn-solid">Request Demo →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-tag"><span class="tag-dot"></span>Carbon Intelligence · MENA</div>
+      <h1>Industrial carbon,<br>turned into <em>financial clarity.</em></h1>
+      <p class="hero-sub">MENA manufacturers face billion-euro exposure from EU carbon border regulations. AuraCap converts that complexity into a precise number — and a plan to reduce it.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-solid btn-lg">Get started →</a>
+        <a href="#how" class="btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          See how it works
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="metrics-card">
+        <div class="metrics-card-label">CBAM Exposure Overview — 2026</div>
+        <div class="metric-item">
+          <span class="metric-desc">Estimated EU carbon certificate cost per factory</span>
+          <span class="metric-val">€2.4M <em>/ yr</em></span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-desc">Current EU ETS carbon price range</span>
+          <span class="metric-val">€50–65 <em>/ tCO₂</em></span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-desc">Potential ROI on AuraCap deployment</span>
+          <span class="metric-val">3.1× <em>over 5yr</em></span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-desc">Industries at immediate risk</span>
+          <span class="metric-val">5 <em>sectors</em></span>
+        </div>
+        <div class="cbam-flag">
+          <span style="font-size:.9rem;flex-shrink:0;margin-top:1px">⚠</span>
+          <div class="flag-text">
+            <strong>Enforcement begins February 2027</strong>
+            Mandatory verified reporting is already required. Companies without compliant MRV systems face market access penalties and export barriers.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<div id="how">
+  <div class="how-inner">
+    <div class="how-head reveal">
+      <div>
+        <div class="eyebrow">How It Works</div>
+        <h2 class="title">From production floor<br>to <em>regulatory readiness.</em></h2>
+      </div>
+      <p class="sub">Three steps. Fully automated. Accepted by EU auditors — without building a compliance team from scratch.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Connect your operations</h3>
+        <p>Link production data, energy invoices, and existing IoT sensors directly to AuraCap's MRV engine. No spreadsheets. No manual data entry.</p>
+        <span class="step-badge">IoT-native</span>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Measure &amp; verify automatically</h3>
+        <p>Calculate your exact carbon footprint per unit of output — Scope 1, 2, and 3 — aligned with EU CBAM templates and NDC 3.0 reporting standards.</p>
+        <span class="step-badge">Audit-grade</span>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Act on clear intelligence</h3>
+        <p>See your tax exposure in real currency. Model decarbonization scenarios. Calculate ROI of carbon capture hardware before committing a single dollar.</p>
+        <span class="step-badge">Decision-ready</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<div id="services">
+  <div class="inner">
+    <div class="services-head reveal">
+      <div>
+        <div class="eyebrow">Platform Services</div>
+        <h2 class="title">Six modules.<br><em>One integrated platform.</em></h2>
+      </div>
+      <p class="sub">Each module solves a distinct pain point — from regulatory compliance to investor-grade ESG reporting. Together, they turn carbon from a liability into a strategic asset.</p>
+    </div>
+    <div class="acc reveal">
+
+      <!-- 01 CBAM -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">01</span>
+          <span class="acc-icon-wrap">📊</span>
+          <span class="acc-meta">
+            <span class="acc-label">Financial Intelligence</span>
+            <span class="acc-title">CBAM Financial Forecaster</span>
+          </span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content single">
+              <div>
+                <p class="acc-desc">Converts emission volumes into hard currency before the invoice arrives. The financial briefing every CFO and plant manager needs before February 2027.</p>
+                <ul class="acc-sub-list">
+                  <li>Estimate exact CBAM certificate costs based on 2026 production data
+                    <div class="sub-features">
+                      <span>Real-time price feed from EU ETS market</span>
+                      <span>Per-product and per-facility breakdown</span>
+                    </div>
+                  </li>
+                  <li>Sensitivity analysis across EU ETS carbon price fluctuation scenarios
+                    <div class="sub-features">
+                      <span>Optimistic / base / stress-test scenarios</span>
+                      <span>Monthly and annual forecast curves</span>
+                    </div>
+                  </li>
+                  <li>Competitive gap analysis: your landed cost vs. EU peers post-CBAM
+                    <div class="sub-features">
+                      <span>Sector-level benchmarking for cement, steel, fertilizers</span>
+                      <span>Export competitiveness impact assessment</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 Compliance -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">02</span>
+          <span class="acc-icon-wrap">✅</span>
+          <span class="acc-meta">
+            <span class="acc-label">Reporting &amp; Compliance</span>
+            <span class="acc-title">Audit-Ready Compliance Engine</span>
+          </span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content single">
+              <div>
+                <p class="acc-desc">Automated reporting fully aligned with EU CBAM submission templates and NDC 3.0 requirements. One click to generate. Accepted by international auditors.</p>
+                <ul class="acc-sub-list">
+                  <li>Periodic compliance reports, auto-generated on schedule
+                    <div class="sub-features">
+                      <span>Monthly, quarterly, and annual reporting cycles</span>
+                      <span>Pre-filled EU CBAM submission templates</span>
+                    </div>
+                  </li>
+                  <li>Product Carbon Footprint (PCF) calculated per unit of output
+                    <div class="sub-features">
+                      <span>Scope 1, 2, and 3 emissions attribution per SKU</span>
+                      <span>ISO 14067-aligned calculation methodology</span>
+                    </div>
+                  </li>
+                  <li>Digital evidence archive structured for third-party audits
+                    <div class="sub-features">
+                      <span>Energy invoice ingestion and auto-tagging</span>
+                      <span>Immutable audit trail with timestamped records</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 ESG -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">03</span>
+          <span class="acc-icon-wrap">🌿</span>
+          <span class="acc-meta">
+            <span class="acc-label">ESG Intelligence</span>
+            <span class="acc-title">ESG Reporting Suite</span>
+          </span>
+          <span class="acc-badges"><span class="badge-core">Core Service</span></span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content wide">
+              <div>
+                <p class="acc-desc">Investor-grade Environmental, Social &amp; Governance reports built automatically from your operational data. Aligned with GRI, TCFD, CDP, and ISSB standards — the frameworks your board, lenders, and international partners expect.</p>
+                <ul class="acc-sub-list">
+                  <li>Automated ESG disclosure reports aligned with GRI Standards and ISSB S2
+                    <div class="sub-features">
+                      <span>Pre-built GRI topic disclosures populated from live data</span>
+                      <span>ISSB S2 climate-related financial disclosure templates</span>
+                    </div>
+                  </li>
+                  <li>TCFD-structured climate risk assessment and scenario analysis
+                    <div class="sub-features">
+                      <span>Physical and transition risk mapping for your assets</span>
+                      <span>1.5°C, 2°C, and 4°C scenario modelling</span>
+                    </div>
+                  </li>
+                  <li>CDP submission-ready data packaging
+                    <div class="sub-features">
+                      <span>Automated responses to CDP Climate questionnaire sections</span>
+                      <span>Supplier engagement module for Scope 3 data collection</span>
+                    </div>
+                  </li>
+                  <li>Board-ready executive summaries and investor presentation exports
+                    <div class="sub-features">
+                      <span>One-page ESG scorecard PDF with benchmarks</span>
+                      <span>Year-on-year performance tracking and target progress</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="esg-aside">
+                <div class="esg-aside-label">ESG Score Snapshot</div>
+                <div class="esg-bars">
+                  <div class="esg-bar-row"><span class="esg-bar-label">Environmental</span><div class="esg-bar-track"><div class="esg-bar-fill" style="width:78%;background:var(--emerald)"></div></div><span class="esg-bar-val">78</span></div>
+                  <div class="esg-bar-row"><span class="esg-bar-label">Social</span><div class="esg-bar-track"><div class="esg-bar-fill" style="width:65%;background:#3B82F6"></div></div><span class="esg-bar-val">65</span></div>
+                  <div class="esg-bar-row"><span class="esg-bar-label">Governance</span><div class="esg-bar-track"><div class="esg-bar-fill" style="width:82%;background:#8B5CF6"></div></div><span class="esg-bar-val">82</span></div>
+                </div>
+                <div class="esg-aside-label">Aligned Frameworks</div>
+                <div class="esg-fw">
+                  <span class="fw-tag">GRI</span><span class="fw-tag">TCFD</span><span class="fw-tag">CDP</span><span class="fw-tag">ISSB S2</span><span class="fw-tag">SDGs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 Decarbonization -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">04</span>
+          <span class="acc-icon-wrap">🔬</span>
+          <span class="acc-meta">
+            <span class="acc-label">Strategy</span>
+            <span class="acc-title">Decarbonization Roadmap Simulator</span>
+          </span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content single">
+              <div>
+                <p class="acc-desc">A digital consultant for capital decisions. Model "what if we install AuraCap hardware?" and see the financial impact in precise terms before signing anything.</p>
+                <ul class="acc-sub-list">
+                  <li>Hardware cost vs. CBAM savings ROI calculator
+                    <div class="sub-features">
+                      <span>10-year NPV and payback period modelling</span>
+                      <span>Financing scenarios: CAPEX, leasing, performance contracts</span>
+                    </div>
+                  </li>
+                  <li>Side-by-side decarbonization scenario comparison
+                    <div class="sub-features">
+                      <span>Carbon capture vs. fuel switching vs. efficiency upgrades</span>
+                      <span>Phased rollout planning aligned with budget cycles</span>
+                    </div>
+                  </li>
+                  <li>Integration with AuraCap hardware performance data
+                    <div class="sub-features">
+                      <span>Real capture rates from deployed units feed directly into projections</span>
+                      <span>Live recalibration as operational data accumulates</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 Carbon-to-Value -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">05</span>
+          <span class="acc-icon-wrap">⚗️</span>
+          <span class="acc-meta">
+            <span class="acc-label">Core Technology</span>
+            <span class="acc-title">Carbon-to-Value Analytics</span>
+          </span>
+          <span class="acc-badges"><span class="badge-core">AuraCap DNA</span></span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content single">
+              <div>
+                <p class="acc-desc">The DNA of AuraCap. Track every kilogram of captured CO₂ converted into green hydrogen or SAF — and certify it as a bankable green asset on the voluntary carbon market.</p>
+                <ul class="acc-sub-list">
+                  <li>Real-time carbon conversion pathway tracking
+                    <div class="sub-features">
+                      <span>CO₂ input → H₂ / SAF / methanol output accounting</span>
+                      <span>IoT-verified mass balance for each batch</span>
+                    </div>
+                  </li>
+                  <li>Green hydrogen &amp; SAF yield documentation
+                    <div class="sub-features">
+                      <span>Certification-ready production logs per ISO 19870</span>
+                      <span>Lifecycle emissions intensity (gCO₂/MJ) per output stream</span>
+                    </div>
+                  </li>
+                  <li>Carbon credit issuance and trading management
+                    <div class="sub-features">
+                      <span>VCS / Gold Standard credit generation workflow</span>
+                      <span>Registry integration and retirement tracking</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 Supply Chain -->
+      <div class="acc-item dim">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span class="acc-num">06</span>
+          <span class="acc-icon-wrap">🔗</span>
+          <span class="acc-meta">
+            <span class="acc-label">Supply Chain</span>
+            <span class="acc-title">Supply Chain Carbon Tracker</span>
+          </span>
+          <span class="acc-badges"><span class="badge-road">Phase 2</span></span>
+          <span class="acc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="acc-content single">
+              <div>
+                <p class="acc-desc">Collect upstream Scope 3 emissions data from your suppliers and transform your entire value chain into a compliance asset. Planned for Phase 2 rollout.</p>
+                <ul class="acc-sub-list">
+                  <li>Supplier carbon data request portal
+                    <div class="sub-features">
+                      <span>Automated data collection requests to your supplier network</span>
+                      <span>Standardised input templates for SME suppliers</span>
+                    </div>
+                  </li>
+                  <li>Scope 3 emissions consolidation and reporting
+                    <div class="sub-features">
+                      <span>Category 1 (purchased goods) and Category 4 (transport) mapping</span>
+                      <span>GHG Protocol Scope 3 standard alignment</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PARTNERS -->
+<div id="partners">
+  <div class="partners-inner">
+    <div class="partners-head reveal">
+      <div class="eyebrow">Partners &amp; Collaborators</div>
+      <h2 class="title">Trusted by institutions<br>that <em>shape policy.</em></h2>
+      <p>AuraCap operates within a growing network of research, policy, and industry partners across Jordan, the UK, and international development organisations.</p>
+    </div>
+    <div class="partners-grid reveal">
+
+      <!-- Oxford Impact Group -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#F0ECF8"/>
+            <!-- Oxford open book icon style -->
+            <path d="M12 36C12 36 20 30 28 30C36 30 44 36 44 36" stroke="#5B21A8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M28 18V30" stroke="#5B21A8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 22C12 22 18 18 28 18" stroke="#5B21A8" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M44 22C44 22 38 18 28 18" stroke="#5B21A8" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M12 22V36" stroke="#5B21A8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M44 22V36" stroke="#5B21A8" stroke-width="2" stroke-linecap="round"/>
+            <text x="28" y="48" text-anchor="middle" font-family="serif" font-size="7" font-weight="700" fill="#5B21A8" letter-spacing="0.5">OIG</text>
+          </svg>
+        </div>
+        <div class="pcard-name">Oxford Impact Group</div>
+        <div class="pcard-type">UK · Research &amp; Policy</div>
+      </div>
+
+      <!-- CLA -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#EEF3FF"/>
+            <!-- Network/cooperative nodes -->
+            <circle cx="28" cy="20" r="5" fill="#3154B0"/>
+            <circle cx="16" cy="36" r="4" fill="#3154B0" opacity=".7"/>
+            <circle cx="40" cy="36" r="4" fill="#3154B0" opacity=".7"/>
+            <line x1="28" y1="25" x2="16" y2="32" stroke="#3154B0" stroke-width="1.5" opacity=".5"/>
+            <line x1="28" y1="25" x2="40" y2="32" stroke="#3154B0" stroke-width="1.5" opacity=".5"/>
+            <line x1="20" y1="36" x2="36" y2="36" stroke="#3154B0" stroke-width="1.5" opacity=".5"/>
+            <text x="28" y="50" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="700" fill="#3154B0" letter-spacing="1">CLA</text>
+          </svg>
+        </div>
+        <div class="pcard-name">Cooperative Leaders Association</div>
+        <div class="pcard-type">Jordan · Industry Partner</div>
+      </div>
+
+      <!-- مساحة الصناع -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#FFF7ED"/>
+            <!-- Gear / maker icon -->
+            <circle cx="28" cy="28" r="7" stroke="#C2410C" stroke-width="2.5"/>
+            <circle cx="28" cy="28" r="3" fill="#C2410C"/>
+            <!-- gear teeth -->
+            <rect x="26.5" y="13" width="3" height="5" rx="1.5" fill="#C2410C"/>
+            <rect x="26.5" y="38" width="3" height="5" rx="1.5" fill="#C2410C"/>
+            <rect x="13" y="26.5" width="5" height="3" rx="1.5" fill="#C2410C"/>
+            <rect x="38" y="26.5" width="5" height="3" rx="1.5" fill="#C2410C"/>
+            <rect x="17.5" y="17.5" width="3" height="5" rx="1.5" fill="#C2410C" transform="rotate(45 19 20)"/>
+            <rect x="35.5" y="33.5" width="3" height="5" rx="1.5" fill="#C2410C" transform="rotate(45 37 36)"/>
+            <rect x="33.5" y="17.5" width="3" height="5" rx="1.5" fill="#C2410C" transform="rotate(-45 36 20)"/>
+            <rect x="17.5" y="33.5" width="3" height="5" rx="1.5" fill="#C2410C" transform="rotate(-45 20 36)"/>
+          </svg>
+        </div>
+        <div class="pcard-name">مساحة الصناع</div>
+        <div class="pcard-type">Jordan · Maker &amp; Innovation Hub</div>
+      </div>
+
+      <!-- GGGI -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#E8F5E9"/>
+            <!-- Globe with leaf -->
+            <circle cx="28" cy="27" r="13" stroke="#2E7D32" stroke-width="2"/>
+            <path d="M15 27H41" stroke="#2E7D32" stroke-width="1.5" opacity=".5"/>
+            <path d="M28 14C28 14 23 20 23 27C23 34 28 40 28 40" stroke="#2E7D32" stroke-width="1.5"/>
+            <path d="M28 14C28 14 33 20 33 27C33 34 28 40 28 40" stroke="#2E7D32" stroke-width="1.5"/>
+            <!-- leaf accent top right -->
+            <path d="M36 16C36 16 42 14 40 22C38 24 34 22 36 16Z" fill="#2E7D32" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="pcard-name">Global Green Growth Institute</div>
+        <div class="pcard-type">International · Green Growth &amp; Policy</div>
+      </div>
+
+      <!-- Beyond Group -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#F0FDF4"/>
+            <!-- Arrow pointing beyond / forward -->
+            <path d="M14 28H38" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M30 20L40 28L30 36" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- small dot trail -->
+            <circle cx="14" cy="28" r="2" fill="#059669" opacity=".4"/>
+            <circle cx="20" cy="28" r="2" fill="#059669" opacity=".4"/>
+            <text x="28" y="48" text-anchor="middle" font-family="sans-serif" font-size="6.5" font-weight="600" fill="#059669" letter-spacing="0.5">BEYOND</text>
+          </svg>
+        </div>
+        <div class="pcard-name">Beyond Group</div>
+        <div class="pcard-type">Jordan · Strategic Partner</div>
+      </div>
+
+      <!-- JRF -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#FFF1F2"/>
+            <!-- River wave + hands motif -->
+            <path d="M12 32C16 28 20 34 24 30C28 26 32 32 36 28C40 24 44 30 44 30" stroke="#BE123C" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M12 24C16 20 20 26 24 22C28 18 32 24 36 20C40 16 44 22 44 22" stroke="#BE123C" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+            <text x="28" y="48" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="700" fill="#BE123C" letter-spacing="0.5">JRF</text>
+          </svg>
+        </div>
+        <div class="pcard-name">Jordan River Foundation</div>
+        <div class="pcard-type">Jordan · Community &amp; Sustainability</div>
+      </div>
+
+      <!-- iPARK -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#FFF3E0"/>
+            <!-- Rocket / launch icon for innovation hub -->
+            <path d="M28 38V28" stroke="#E65100" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M22 34C22 34 20 28 22 22C24 16 28 14 28 14C28 14 32 16 34 22C36 28 34 34 34 34" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="28" cy="24" r="3" fill="#E65100"/>
+            <path d="M22 34L18 38" stroke="#E65100" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            <path d="M34 34L38 38" stroke="#E65100" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            <text x="28" y="50" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="700" fill="#E65100" letter-spacing="0.5">iPARK</text>
+          </svg>
+        </div>
+        <div class="pcard-name">iPARK — Royal Scientific Society</div>
+        <div class="pcard-type">Jordan · Innovation &amp; Incubation Hub</div>
+      </div>
+
+      <!-- Kocia -->
+      <div class="pcard">
+        <div class="pcard-logo">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="56" height="56" rx="12" fill="#E8F5E9"/>
+            <!-- K letterform with growth arrow -->
+            <text x="14" y="36" font-family="sans-serif" font-size="22" font-weight="800" fill="#1B5E20" letter-spacing="-1">K</text>
+            <!-- upward arrow accent -->
+            <path d="M36 32L40 26L44 32" stroke="#43A047" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M40 26V38" stroke="#43A047" stroke-width="2" stroke-linecap="round"/>
+            <text x="28" y="50" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="600" fill="#1B5E20" letter-spacing="1">KOCIA</text>
+          </svg>
+        </div>
+        <div class="pcard-name">Kocia</div>
+        <div class="pcard-type">Strategic Partner</div>
+      </div>
+
+      <!-- Join us -->
+      <div class="pcard pcard-join" style="grid-column:span 4;">
+        <div style="display:flex;align-items:center;gap:20px;position:relative;z-index:1;">
+          <div class="pcard-logo" style="background:transparent;border:1.5px dashed var(--line2);width:48px;height:48px;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink4)" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="pcard-name">Become a Partner</div>
+            <div class="pcard-type">We're actively building our partner network across Jordan, MENA, and international institutions. <a href="#cta" style="color:var(--emerald);text-decoration:underline;text-underline-offset:3px;">Get in touch →</a></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="inner">
+    <div class="about-grid reveal">
+      <div>
+        <div class="eyebrow">About AuraCap</div>
+        <h2 class="title">Built in Jordan.<br><em>Designed for MENA industry.</em></h2>
+        <div class="about-body">
+          <p>AuraCap was founded to solve a precise problem: <strong>MENA's industrial manufacturers face trillion-dollar European carbon regulations — with no regional tools to help them navigate it.</strong></p>
+          <p>We combine <strong>modular carbon capture hardware</strong> with an intelligent <strong>MRV software platform</strong> — giving factories in Jordan, the Gulf, and beyond a complete, integrated solution to measure, report, reduce, and monetize their carbon output.</p>
+          <p>With a <strong>validated working prototype</strong> and a growing industrial partner network, AuraCap is positioned at the forefront of MENA's decarbonization transition — before the regulatory deadline forces a scramble.</p>
+        </div>
+        <div class="pillars">
+          <div class="pillar"><div class="pillar-icon">🏭</div><h4>Industrial Focus</h4><p>Cement, steel, fertilizers, refining — CBAM's highest-risk sectors</p></div>
+          <div class="pillar"><div class="pillar-icon">🌍</div><h4>MENA-Native</h4><p>Built for the regulatory context and SME realities of the region</p></div>
+          <div class="pillar"><div class="pillar-icon">🔬</div><h4>Validated Technology</h4><p>Working prototype with measurable carbon capture performance data</p></div>
+          <div class="pillar"><div class="pillar-icon">📡</div><h4>IoT-Native Architecture</h4><p>Real-time sensor data — not manual estimates or guesswork</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="about-panel">
+          <div class="panel-header">
+            <span class="panel-title">Platform Intelligence — Live View</span>
+            <span class="panel-live">Live</span>
+          </div>
+          <div class="panel-rows">
+            <div class="panel-row"><span class="pr-label">CBAM exposure (2026 est.)</span><span class="pr-val">€2.4M <small>before opt.</small></span></div>
+            <div class="panel-row"><span class="pr-label">CO₂ captured this month</span><span class="pr-val">847 <small>tCO₂ ↓</small></span></div>
+            <div class="panel-row"><span class="pr-label">Carbon credits issued</span><span class="pr-val">312 <small>credits</small></span></div>
+            <div class="panel-row"><span class="pr-label">Green hydrogen yield</span><span class="pr-val">14.2 <small>t H₂</small></span></div>
+            <div class="panel-row"><span class="pr-label">Hardware ROI projection</span><span class="pr-val">3.1× <small>over 5yr</small></span></div>
+          </div>
+          <div class="panel-alert">
+            <div class="pa-head">⚠ CBAM Countdown</div>
+            <div class="pa-body">Full financial enforcement begins February 2027. Verified reporting is mandatory now. Act before the deadline becomes a crisis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DATA & CHARTS -->
+<div id="data">
+  <div class="inner">
+    <div class="data-head reveal">
+      <div>
+        <div class="eyebrow">Data &amp; Insights</div>
+        <h2 class="title">The numbers behind<br>the <em>carbon economy.</em></h2>
+      </div>
+      <p class="sub">Real data from EU institutions, market research, and global energy agencies — updated to reflect 2025 market conditions.</p>
+    </div>
+
+    <div class="charts-grid">
+
+      <!-- Chart 1: EU ETS Price Line — WIDE -->
+      <div class="chart-card chart-8 reveal">
+        <div class="chart-label">EU ETS Carbon Price</div>
+        <div class="chart-title">Carbon allowance price trajectory — EUR per tonne CO₂</div>
+        <div class="chart-src">Source: <a href="https://economy-finance.ec.europa.eu" target="_blank">European Commission</a> · ESMA 2025</div>
+        <svg class="svg-chart" viewBox="0 0 520 140" style="height:140px;">
+          <!-- Grid lines -->
+          <line x1="0" y1="20" x2="520" y2="20" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="0" y1="50" x2="520" y2="50" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="0" y1="80" x2="520" y2="80" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="0" y1="110" x2="520" y2="110" stroke="#E5E3DD" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="0" y="18" font-size="9" fill="#B2AFA6">€90</text>
+          <text x="0" y="48" font-size="9" fill="#B2AFA6">€70</text>
+          <text x="0" y="78" font-size="9" fill="#B2AFA6">€50</text>
+          <text x="0" y="108" font-size="9" fill="#B2AFA6">€30</text>
+          <!-- Price line: 2018→€15, 2019→€24, 2020→€24, 2021→€50, 2022→€80, 2023→€88, 2024→€65, 2025→€68, 2027f→€80 -->
+          <polyline
+            points="24,128 80,118 136,118 192,80 248,28 304,14 360,42 416,38 476,28"
+            fill="none" stroke="#0A6652" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- Area fill -->
+          <polygon
+            points="24,128 80,118 136,118 192,80 248,28 304,14 360,42 416,38 476,28 476,132 24,132"
+            fill="url(#chartGrad)" opacity="0.15"/>
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0A6652"/>
+              <stop offset="100%" stop-color="#0A6652" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Dots -->
+          <circle cx="304" cy="14" r="4" fill="#0A6652"/>
+          <text x="294" y="10" font-size="9" fill="#0A6652" font-weight="600">€88</text>
+          <circle cx="416" cy="38" r="4" fill="#0A6652"/>
+          <text x="406" y="34" font-size="9" fill="#0A6652" font-weight="600">€65</text>
+          <!-- Forecast dashed -->
+          <line x1="416" y1="38" x2="476" y2="28" stroke="#0A6652" stroke-width="1.5" stroke-dasharray="4,3" opacity=".6"/>
+          <circle cx="476" cy="28" r="3" fill="none" stroke="#0A6652" stroke-width="1.5"/>
+          <text x="460" y="22" font-size="9" fill="#0A6652" opacity=".7">€80f</text>
+          <!-- X labels -->
+          <text x="20" y="132" font-size="9" fill="#B2AFA6">2018</text>
+          <text x="76" y="132" font-size="9" fill="#B2AFA6">2019</text>
+          <text x="132" y="132" font-size="9" fill="#B2AFA6">2020</text>
+          <text x="188" y="132" font-size="9" fill="#B2AFA6">2021</text>
+          <text x="244" y="132" font-size="9" fill="#B2AFA6">2022</text>
+          <text x="300" y="132" font-size="9" fill="#B2AFA6">2023</text>
+          <text x="356" y="132" font-size="9" fill="#B2AFA6">2024</text>
+          <text x="412" y="132" font-size="9" fill="#B2AFA6">2025</text>
+          <text x="462" y="132" font-size="9" fill="#B2AFA6">2027f</text>
+        </svg>
+      </div>
+
+      <!-- Chart 2: Key stats — NARROW -->
+      <div class="chart-card chart-4 reveal">
+        <div class="chart-label">EU ETS Key Figures 2024–2025</div>
+        <div class="chart-title">Market snapshot</div>
+        <div class="chart-src">Source: ESMA · European Commission</div>
+        <div class="stat-blocks">
+          <div class="stat-block">
+            <div class="stat-block-val">€60–80 <em>/tCO₂</em></div>
+            <div class="stat-block-desc">2025 ETS price range — sustained above €50 since 2021</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-block-val">€149 <em>by 2030</em></div>
+            <div class="stat-block-desc">BloombergNEF forecast for ETS II carbon price under new transport/building system</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-block-val">€245B <em>raised</em></div>
+            <div class="stat-block-desc">Total EU ETS revenue by mid-2025 since system launch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 3: Sector emissions bar -->
+      <div class="chart-card chart-6 reveal">
+        <div class="chart-label">CBAM Sector Exposure</div>
+        <div class="chart-title">Estimated annual CBAM cost by industrial sector</div>
+        <div class="chart-src">Source: AuraCap estimates based on EU Commission data · @€65/tCO₂</div>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <span class="bar-row-label">Steel &amp; Iron</span>
+            <div class="bar-track"><div class="bar-fill" style="width:92%;background:#0A6652;"></div></div>
+            <span class="bar-val">€1.8B+</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-row-label">Cement</span>
+            <div class="bar-track"><div class="bar-fill" style="width:74%;background:#0A6652;opacity:.85"></div></div>
+            <span class="bar-val">€1.4B</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-row-label">Fertilizers</span>
+            <div class="bar-track"><div class="bar-fill" style="width:56%;background:#0A6652;opacity:.7"></div></div>
+            <span class="bar-val">€1.1B</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-row-label">Aluminium</span>
+            <div class="bar-track"><div class="bar-fill" style="width:42%;background:#0A6652;opacity:.55"></div></div>
+            <span class="bar-val">€820M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-row-label">Hydrogen</span>
+            <div class="bar-track"><div class="bar-fill" style="width:24%;background:#0A6652;opacity:.4"></div></div>
+            <span class="bar-val">€470M</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 4: ROI Comparison -->
+      <div class="chart-card chart-6 reveal">
+        <div class="chart-label">ROI Analysis</div>
+        <div class="chart-title">AuraCap capture vs. CBAM tax — 5-year cumulative cost</div>
+        <div class="chart-src">Source: AuraCap financial model · conservative scenario</div>
+        <svg class="svg-chart" viewBox="0 0 360 130" style="height:130px;">
+          <!-- Grid -->
+          <line x1="50" y1="10" x2="350" y2="10" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="50" y1="40" x2="350" y2="40" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="50" y1="70" x2="350" y2="70" stroke="#E5E3DD" stroke-width="1"/>
+          <line x1="50" y1="100" x2="350" y2="100" stroke="#E5E3DD" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="0" y="13" font-size="9" fill="#B2AFA6">€10M</text>
+          <text x="4" y="43" font-size="9" fill="#B2AFA6">€7M</text>
+          <text x="4" y="73" font-size="9" fill="#B2AFA6">€4M</text>
+          <text x="4" y="103" font-size="9" fill="#B2AFA6">€1M</text>
+          <!-- CBAM tax line (rising) -->
+          <polyline points="70,100 130,88 190,72 250,50 310,22" fill="none" stroke="#BE123C" stroke-width="2" stroke-linecap="round"/>
+          <!-- AuraCap line (flattens) -->
+          <polyline points="70,100 130,82 190,68 250,60 310,58" fill="none" stroke="#0A6652" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Labels -->
+          <text x="312" y="20" font-size="8.5" fill="#BE123C" font-weight="500">CBAM tax</text>
+          <text x="312" y="56" font-size="8.5" fill="#0A6652" font-weight="500">AuraCap</text>
+          <!-- Saving zone -->
+          <polygon points="190,68 250,60 310,58 310,22 250,50 190,72" fill="#0A6652" opacity=".07"/>
+          <text x="225" y="52" font-size="8" fill="#0A6652" font-weight="600">Saving zone</text>
+          <!-- X labels -->
+          <text x="66" y="118" font-size="9" fill="#B2AFA6">Yr 1</text>
+          <text x="126" y="118" font-size="9" fill="#B2AFA6">Yr 2</text>
+          <text x="186" y="118" font-size="9" fill="#B2AFA6">Yr 3</text>
+          <text x="246" y="118" font-size="9" fill="#B2AFA6">Yr 4</text>
+          <text x="306" y="118" font-size="9" fill="#B2AFA6">Yr 5</text>
+        </svg>
+        <div style="display:flex;gap:16px;margin-top:12px;">
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--ink3);"><div style="width:16px;height:3px;background:#BE123C;border-radius:2px;"></div>CBAM tax (escalating)</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--ink3);"><div style="width:16px;height:3px;background:#0A6652;border-radius:2px;"></div>AuraCap total cost</div>
+        </div>
+      </div>
+
+      <!-- Chart 5: Green Hydrogen Market Growth -->
+      <div class="chart-card chart-12 reveal">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:start;">
+          <div style="grid-column:span 2;">
+            <div class="chart-label">Green Hydrogen Market</div>
+            <div class="chart-title">Global market size growth — USD Billion</div>
+            <div class="chart-src">Source: <a href="https://www.grandviewresearch.com" target="_blank">Grand View Research</a> · MarketsandMarkets 2025</div>
+            <svg class="svg-chart" viewBox="0 0 480 120" style="height:120px;margin-top:8px;">
+              <!-- Grid -->
+              <line x1="40" y1="10" x2="480" y2="10" stroke="#E5E3DD" stroke-width="1"/>
+              <line x1="40" y1="40" x2="480" y2="40" stroke="#E5E3DD" stroke-width="1"/>
+              <line x1="40" y1="70" x2="480" y2="70" stroke="#E5E3DD" stroke-width="1"/>
+              <line x1="40" y1="100" x2="480" y2="100" stroke="#E5E3DD" stroke-width="1"/>
+              <!-- Y -->
+              <text x="0" y="13" font-size="9" fill="#B2AFA6">$115B</text>
+              <text x="4" y="43" font-size="9" fill="#B2AFA6">$80B</text>
+              <text x="4" y="73" font-size="9" fill="#B2AFA6">$40B</text>
+              <text x="4" y="103" font-size="9" fill="#B2AFA6">$0</text>
+              <!-- Bar chart -->
+              <rect x="58" y="97" width="28" height="3" fill="#0A6652" opacity=".3" rx="2"/>
+              <rect x="118" y="95" width="28" height="5" fill="#0A6652" opacity=".4" rx="2"/>
+              <rect x="178" y="90" width="28" height="10" fill="#0A6652" opacity=".5" rx="2"/>
+              <rect x="238" y="80" width="28" height="20" fill="#0A6652" opacity=".65" rx="2"/>
+              <rect x="298" y="60" width="28" height="40" fill="#0A6652" opacity=".8" rx="2"/>
+              <rect x="358" y="25" width="28" height="75" fill="#0A6652" rx="2"/>
+              <!-- Value labels -->
+              <text x="59" y="94" font-size="8" fill="#B2AFA6">$5B</text>
+              <text x="119" y="92" font-size="8" fill="#B2AFA6">$7B</text>
+              <text x="179" y="87" font-size="8" fill="#78756A">$12B</text>
+              <text x="236" y="77" font-size="8" fill="#78756A">$25B</text>
+              <text x="296" y="57" font-size="8" fill="#0A6652" font-weight="600">$60B</text>
+              <text x="350" y="21" font-size="8" fill="#0A6652" font-weight="700">$115B</text>
+              <!-- X labels -->
+              <text x="57" y="116" font-size="9" fill="#B2AFA6">2023</text>
+              <text x="117" y="116" font-size="9" fill="#B2AFA6">2024</text>
+              <text x="177" y="116" font-size="9" fill="#B2AFA6">2025</text>
+              <text x="237" y="116" font-size="9" fill="#B2AFA6">2027</text>
+              <text x="297" y="116" font-size="9" fill="#B2AFA6">2030</text>
+              <text x="352" y="116" font-size="9" fill="#0A6652" font-weight="600">2033</text>
+            </svg>
+          </div>
+          <div>
+            <div class="chart-label">Why It Matters for AuraCap</div>
+            <div class="stat-blocks" style="margin-top:26px;">
+              <div class="stat-block">
+                <div class="stat-block-val">30% <em>CAGR</em></div>
+                <div class="stat-block-desc">Green hydrogen market annual growth rate 2026–2033</div>
+              </div>
+              <div class="stat-block">
+                <div class="stat-block-val">$115B <em>by 2033</em></div>
+                <div class="stat-block-desc">Projected global green H₂ market size — Grand View Research</div>
+              </div>
+              <div class="stat-block">
+                <div class="stat-block-val">46.9% <em>Europe</em></div>
+                <div class="stat-block-desc">Europe's share of global green hydrogen market in 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- NEWS -->
+<div id="news">
+  <div class="inner">
+    <div class="news-head reveal">
+      <div>
+        <div class="eyebrow">News &amp; Insights</div>
+        <h2 class="title">What's moving the<br><em>carbon agenda.</em></h2>
+      </div>
+      <p class="sub">The latest from EU regulators, global climate policy, and AuraCap — curated for MENA industrial decision-makers.</p>
+    </div>
+
+    <div class="news-grid">
+
+      <!-- Featured: CBAM definitive phase -->
+      <div class="news-featured reveal">
+        <div class="news-featured-left">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+            <span class="news-tag tag-cbam">CBAM</span>
+            <span class="news-date">Jan 2026</span>
+          </div>
+          <div class="news-title" style="font-family:var(--serif);font-size:1.3rem;line-height:1.25;margin-bottom:14px;">CBAM enters definitive phase — full financial obligations begin January 2026</div>
+          <div class="news-excerpt">The EU's Carbon Border Adjustment Mechanism moved from reporting-only transitional phase into its definitive regime on 1 January 2026. Importers of cement, steel, aluminium, fertilizers, electricity and hydrogen must now purchase CBAM certificates reflecting embedded carbon emissions. Regulation (EU) 2025/2083 introduced key simplifications including a 50-tonne de minimis threshold exempting smaller importers, while keeping 99% of emissions in scope.</div>
+          <div style="margin-top:16px;">
+            <a href="https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en" target="_blank" class="btn btn-solid" style="font-size:0.82rem;padding:8px 16px;">Read at EU Commission →</a>
+          </div>
+        </div>
+        <div class="news-featured-right">
+          <div class="chart-label" style="margin-bottom:16px;">CBAM Timeline</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:8px;height:8px;background:var(--emerald);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>
+              <div><div style="font-size:0.8rem;font-weight:500;color:var(--ink);">Oct 2023 — Transitional phase begins</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:2px;">Reporting only, no financial obligation</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:8px;height:8px;background:var(--emerald);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>
+              <div><div style="font-size:0.8rem;font-weight:500;color:var(--ink);">Oct 2025 — Simplification adopted</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:2px;">50-tonne de minimis threshold introduced</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:8px;height:8px;background:#BE123C;border-radius:50%;flex-shrink:0;margin-top:4px;"></div>
+              <div><div style="font-size:0.8rem;font-weight:600;color:var(--emerald);">Jan 2026 — Definitive phase ✓ NOW</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:2px;">Certificate purchase obligations active</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:8px;height:8px;background:var(--line2);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>
+              <div><div style="font-size:0.8rem;font-weight:500;color:var(--ink);">Feb 2027 — First declarations due</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:2px;">Certificates for 2026 imports must be surrendered</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:8px;height:8px;background:var(--line2);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>
+              <div><div style="font-size:0.8rem;font-weight:500;color:var(--ink);">2026–2034 — Free allowances phase-out</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:2px;">EU ETS free allocation gradually eliminated</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- News 2 -->
+      <a class="news-card reveal" href="https://about.bnef.com/insights/commodities/europes-new-emissions-trading-system-expected-to-have-worlds-highest-carbon-price-in-2030-at-e149-bloombergnef-forecast-reveals/" target="_blank">
+        <div class="news-tag-bar">
+          <span class="news-tag tag-market">Market</span>
+          <span class="news-date">Jul 2025</span>
+        </div>
+        <div class="news-body">
+          <div class="news-title">Carbon prices forecast to surge to €149/tonne by 2030 under EU ETS II</div>
+          <div class="news-excerpt">BloombergNEF analysis projects dramatic carbon price escalation as the EU's new ETS II system — covering road transport, buildings, and small industry — launches in 2027. The forecast implies €705 billion in revenue generation by 2035.</div>
+        </div>
+        <div class="news-footer">
+          <span class="news-source">BloombergNEF</span>
+          <span class="news-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- News 3 -->
+      <a class="news-card reveal" href="https://www.weforum.org/stories/2025/12/eu-cbam-impact-business-carbon-pricing-landscape/" target="_blank">
+        <div class="news-tag-bar">
+          <span class="news-tag tag-policy">Policy</span>
+          <span class="news-date">Dec 2025</span>
+        </div>
+        <div class="news-body">
+          <div class="news-title">WEF: Firms that deploy MRV systems now will gain lasting competitive advantage</div>
+          <div class="news-excerpt">The World Economic Forum highlights that MENA and developing-world exporters face the highest risk from CBAM. Companies deploying digital MRV and carbon management tools early will be better positioned than peers waiting for regulatory certainty.</div>
+        </div>
+        <div class="news-footer">
+          <span class="news-source">World Economic Forum</span>
+          <span class="news-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- News 4 -->
+      <a class="news-card reveal" href="https://www.euronews.com/my-europe/2025/12/17/eu-gets-tough-on-carbon-border-tax-on-heavy-industry-vows-to-protect-domestic-producers" target="_blank">
+        <div class="news-tag-bar">
+          <span class="news-tag tag-cbam">CBAM</span>
+          <span class="news-date">Dec 2025</span>
+        </div>
+        <div class="news-body">
+          <div class="news-title">EU expands CBAM scope — downstream goods and new sectors targeted from 2028</div>
+          <div class="news-excerpt">The European Commission announced proposals to significantly expand CBAM coverage to downstream goods and additional sectors by 2028. The Commission plans to channel 25% of CBAM revenues to support European heavy industry decarbonisation.</div>
+        </div>
+        <div class="news-footer">
+          <span class="news-source">Euronews</span>
+          <span class="news-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- News 5 — AuraCap Insight -->
+      <div class="news-card reveal" style="cursor:default;">
+        <div class="news-tag-bar">
+          <span class="news-tag tag-auracap">AuraCap Insight</span>
+          <span class="news-date">Mar 2026</span>
+        </div>
+        <div class="news-body">
+          <div class="news-title">Why MENA factories can't afford to wait another quarter on CBAM compliance</div>
+          <div class="news-excerpt">With CBAM's definitive phase now active and the first certificate surrender deadline in February 2027, Jordanian and Gulf manufacturers exporting to Europe face a 10-month window to establish verified emissions data. AuraCap's MRV platform can be operational in under 60 days.</div>
+        </div>
+        <div class="news-footer">
+          <span class="news-source">AuraCap · Published by Aya</span>
+          <span class="news-arrow" style="color:var(--emerald);">↗</span>
+        </div>
+      </div>
+
+      <!-- News 6 — AuraCap Insight -->
+      <div class="news-card reveal" style="cursor:default;">
+        <div class="news-tag-bar">
+          <span class="news-tag tag-auracap">AuraCap Insight</span>
+          <span class="news-date">Feb 2026</span>
+        </div>
+        <div class="news-body">
+          <div class="news-title">Green hydrogen at €4–7/kg: what it means for carbon-to-value economics in Jordan</div>
+          <div class="news-excerpt">As green hydrogen production costs approach fossil alternatives at industrial hubs, AuraCap's integrated capture-to-hydrogen pathway becomes economically compelling — not just as a compliance tool, but as a revenue-generating asset for Jordanian manufacturers.</div>
+        </div>
+        <div class="news-footer">
+          <span class="news-source">AuraCap · Research Brief</span>
+          <span class="news-arrow" style="color:var(--emerald);">↗</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div id="cta">
+  <div class="cta-inner">
+    <div class="cta-glow"></div>
+    <div class="cta-content reveal">
+      <div class="eyebrow">Get Started</div>
+      <h2 class="title">Know your number.<br><em>Then reduce it.</em></h2>
+      <p class="sub">Request a demo and we'll calculate your exact CBAM exposure — and show you what AuraCap saves, in real currency.</p>
+      <div class="cta-form">
+        <input type="email" placeholder="your@company.com">
+        <a href="#" class="btn btn-solid btn-lg">Request Demo →</a>
+      </div>
+      <p class="cta-note">No commitment. Response within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="#" class="logo">
+        <div class="logo-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2C10 2 4 6 4 11C4 14.3 6.7 17 10 17C13.3 17 16 14.3 16 11C16 6 10 2 10 2Z" fill="white" opacity="0.9"/><path d="M10 8C10 8 7 10.5 7 12.5C7 14 8.3 15 10 15C11.7 15 13 14 13 12.5C13 10.5 10 8 10 8Z" fill="white" opacity="0.4"/></svg></div>
+        AuraCap
+      </a>
+      <span class="footer-copy">© 2025 AuraCap. All rights reserved.</span>
+    </div>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="#data">Data</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="footer-tag"><span class="ft-dot"></span>Jordan · MENA Carbon Intelligence</div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 90);
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Accordion
+function toggleAcc(trigger) {
+  const item = trigger.closest('.acc-item');
+  const body = item.querySelector('.acc-body');
+  const isOpen = trigger.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.acc-trigger.open').forEach(t => {
+    t.classList.remove('open');
+    t.closest('.acc-item').querySelector('.acc-body').classList.remove('open');
+  });
+
+  // Open clicked if it was closed
+  if (!isOpen) {
+    trigger.classList.add('open');
+    body.classList.add('open');
+    // Smooth scroll so it's visible
+    setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+</script>
+</body>
+</html>
